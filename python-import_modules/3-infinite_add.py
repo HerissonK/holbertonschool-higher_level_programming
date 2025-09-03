@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 import sys
-# prints the summation of all its numeric command line arguments
 if __name__ == "__main__":
     count = len(sys.argv)
     count -= 1
