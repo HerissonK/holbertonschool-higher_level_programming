@@ -5,4 +5,4 @@ def uniq_add(my_list=[]):
     for i in range(len(new_list)):
         if i == 0 or new_list[i] != new_list[i - 1]:
             sum += new_list[i]
-    return(sum)
+    return sum
