@@ -1,0 +1,43 @@
+============================
+doctest for 2-matrix_divided.py
+============================
+
+``matrix_divided()`` returns a new matrix with all elements scalar divided
+
+
+SUCCESSFUL TEST CONDITIONS
+==========================
+
+>>> matrix_divided = __import__('2-matrix_divided').matrix_divided
+>>> matrix_divided([[1, 2], [3, 4]], 2)
+[[0.5, 1.0], [1.5, 2.0]]
+
+>>> matrix_divided([[1.2, 2.2], [3.2, 4.2]], 1.2)
+[[1.0, 1.83], [2.67, 3.5]]
+
+>>> matrix_divided([[-1, -2], [3, 4]], -1)
+[[1.0, 2.0], [-3.0, -4.0]]
+
+
+TEST CONDITIONS WHERE AN ERROR IS RAISED
+========================================
+
+>>> matrix_divided(None, 2)
+Traceback (most recent call last):
+TypeError: matrix must be a matrix (list of lists) of integers/floats
+
+>>> matrix_divided([[1, 2], [3, 4, 5]], 2)
+Traceback (most recent call last):
+TypeError: Each row of the matrix must have the same size
+
+>>> matrix_divided([[1, 2], [3, 4]], 0)
+Traceback (most recent call last):
+ZeroDivisionError: division by zero
+
+>>> matrix_divided([[1, "a"], [3, 4]], 2)
+Traceback (most recent call last):
+TypeError: matrix must be a matrix (list of lists) of integers/floats
+
+>>> matrix_divided([[1, 2], [3, 4]], "x")
+Traceback (most recent call last):
+TypeError: div must be a number
