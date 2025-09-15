@@ -7,6 +7,7 @@ class Rectangle:
         properties: methods for width and height
         methods: __init__ method for creating a class
     """
+    number_of_instances = 0
 
     def __init__(self, width=0, height=0):
         self.width = width
