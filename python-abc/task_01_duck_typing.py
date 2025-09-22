@@ -122,23 +122,3 @@ def shape_info(shape):
     # We just trust that the object has the methods we need
     print(f"Area: {shape.area()}")
     print(f"Perimeter: {shape.perimeter()}")
-
-
-
-if __name__ == "__main__":
-    # Test with Circle and Rectangle (inherit from Shape)
-    circle = Circle(radius=5)
-    rectangle = Rectangle(width=4, height=7)
-    
-    print("=== Testing with Shape subclasses ===")
-    print("Circle:")
-    shape_info(circle)
-    print("\nRectangle:")
-    shape_info(rectangle)
-    
-    print("\n=== Demonstrating polymorphism ===")
-    shapes = [circle, rectangle]
-    for i, shape in enumerate(shapes, 1):
-        print(f"Shape {i}:")
-        shape_info(shape)
-        print()
