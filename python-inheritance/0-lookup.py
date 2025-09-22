@@ -1,4 +1,7 @@
 #!/usr/bin/python3
-"""Retourne la liste des attributs et mehodes disponibles pour un objet"""
+"""Definition d'un objet attribut lookup function"""
+
+
 def lookup(obj):
+    """Retourne la liste des attributs et mehodes disponibles pour un objet"""
     return dir(obj)
