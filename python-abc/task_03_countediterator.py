@@ -1,5 +1,3 @@
-# task_03_countediterator.py
-
 class CountedIterator:
     def __init__(self, iterable):
         """Initialise l'objet avec un itérable et un compteur."""
