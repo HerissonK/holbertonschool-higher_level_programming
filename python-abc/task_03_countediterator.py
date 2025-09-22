@@ -7,11 +7,10 @@ class CountedIterator:
     def __next__(self):
         """Retourne le prochain élément de l'itérateur et incrémente le compteur."""
         try:
-            item = next(self.iterator)  # Récupère l'élément suivant
-            self.count += 1             # Incrémente le compteur
+            item = next(self.iterator)
+            self.count += 1
             return item
         except StopIteration:
-            # Transmet l'exception si plus d'éléments
             raise
 
     def get_count(self):

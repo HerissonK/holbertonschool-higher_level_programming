@@ -1,5 +1,3 @@
-# task_02_verboselist.py
-
 class VerboseList(list):
     def append(self, item):
         """Ajoute un élément et affiche un message."""
@@ -18,6 +16,6 @@ class VerboseList(list):
 
     def pop(self, index=-1):
         """Retire un élément et affiche un message avant le retrait."""
-        item = self[index]  # On récupère l'élément qui va être retiré
+        item = self[index]
         print(f"Popped [{item}] from the list.")
         return super().pop(index)
