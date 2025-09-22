@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 """Module defining Circle and Rectangle shapes with duck typing."""
 
-import math
 from abc import ABC, abstractmethod
+import math
 
 
 class Shape(ABC):
@@ -53,6 +53,6 @@ class Rectangle(Shape):
 
 
 def shape_info(shape):
-    """Print area and perimeter of a shape (duck typing)."""
+    """Print the area and perimeter of a shape (duck typing)."""
     print(f"Area: {shape.area()}")
     print(f"Perimeter: {shape.perimeter()}")
