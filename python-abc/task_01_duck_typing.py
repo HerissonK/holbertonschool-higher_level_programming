@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """Duck Typing Exercise with Abstract Base Classes"""
 
-
 from abc import ABC, abstractmethod
 import math
 
@@ -29,15 +28,18 @@ class Circle(Shape):
 
     def area(self):
         """Calculate the area of the circle"""
-        return math.pi * self.radius ** 2
+        r = abs(self.radius)
+        return math.pi * r ** 2
 
     def perimeter(self):
         """Calculate the perimeter (circumference) of the circle"""
-        return 2 * math.pi * self.radius
+        r = abs(self.radius)
+        return 2 * math.pi * r
 
 
 class Rectangle(Shape):
     """A concrete implementation of Shape for rectangles"""
+
     def __init__(self, width, height):
         """Initialize a Rectangle with the given dimensions"""
         self.width = width
