@@ -1,11 +1,8 @@
 #!/usr/bin/python3
-"""function that returns the number of characters written:"""
+"""Function that write a string and returns the number of characters written"""
 
 
 def write_file(filename="", text=""):
-    """return the number of character"""
-    count = 0
-    with open(filename) as file:
-        while file.read is not "":
-            count += 1
-    return count
+    """Write text to a file and return the number of characters written"""
+    with open(filename, "w", encoding="utf-8") as file:
+        return file.write(text)
