@@ -54,19 +54,14 @@ def add_user_route():
     if not username:
         return jsonify({"error": "Username is required"}), 400
 
-    user_data = OrderedDict([
-        ("username", username),
-        ("name", data.get("name", "")),
-        ("age", data.get("age", 0)),
-        ("city", data.get("city", ""))
-    ])
+    users[username] = {
+        "username": username,
+        "name": data.get("name", ""),
+        "age": data.get("age", 0),
+        "city": data.get("city", "")
+    }
+    return jsonify({"message": "User added", "user": users[username]}), 201
 
-    users[username] = user_data
-
-    return jsonify({
-        "message": "User added",
-        "user": user_data
-    }), 201
 
 if __name__ == "__main__":
     app.run(debug=True)
