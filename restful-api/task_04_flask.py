@@ -65,9 +65,9 @@ def add_user():
     # Ajout de l'utilisateur dans le dictionnaire
     users[username] = {
         "username": username,
-        "name": data.get("name"),
-        "age": data.get("age"),
-        "city": data.get("city")
+        "name": data.get("name", ""),
+        "age": data.get("age", 0),
+        "city": data.get("city", "")
     }
 
     return jsonify({"message": "User added", "user": users[username]}), 201
