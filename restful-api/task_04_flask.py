@@ -22,7 +22,7 @@ users = {
 
 @app.route("/", methods=["GET"])
 def home():
-    return jsonify({"message": "Welcome to the Flask API!"})
+    return jsonify("Welcome to the Flask API!")
 
 
 @app.route("/data", methods=["GET"])
@@ -32,7 +32,7 @@ def get_data():
 
 @app.route("/status", methods=["GET"])
 def status():
-    return jsonify({"status": "OK"})
+    return jsonify("OK")
 
 
 @app.route("/users/<username>", methods=["GET"])
