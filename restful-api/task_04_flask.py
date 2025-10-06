@@ -76,4 +76,4 @@ def add_user():
 # Point d'entrée du serveur Flask
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
