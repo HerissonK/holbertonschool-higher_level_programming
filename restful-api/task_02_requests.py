@@ -4,12 +4,11 @@ import requests
 import csv
 
 def fetch_and_print_posts():
-    url = "https://jsonplaceholder.typicode.com/posts"
-    reponse = requests.get(url)
-    print(f"Status Code: {reponse.status_code}")
+    url = requests.get("https://jsonplaceholder.typicode.com/posts")
+    print(f"Status Code: {url.status_code}")
 
-    if reponse.status_code == 200:
-        post = reponse.json()
+    if url.status_code == 200:
+        post = url.json()
         for post in post:
             print(post["title"])    
 
