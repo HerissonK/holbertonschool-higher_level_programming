@@ -24,8 +24,7 @@ users = {
 
 @app.route("/", methods=["GET"])
 def home():
-    return "Welcome to the Flask API!"
-
+    return jsonify({"message": "Welcome to the Flask API!"})
 
 # Route /data -> liste de tous les usernames
 
@@ -38,7 +37,7 @@ def get_data():
 
 @app.route("/status", methods=["GET"])
 def status():
-    return "OK"
+    return jsonify({"status": "OK"})
 
 
 # Route /users/<username> -> informations d'un utilisateur
