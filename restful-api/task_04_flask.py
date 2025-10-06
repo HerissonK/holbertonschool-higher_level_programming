@@ -3,7 +3,6 @@ from flask import Flask, jsonify, request
 
 app = Flask(__name__)
 
-# Stockage des utilisateurs en mémoire
 users = {
     "jane": {
         "username": "jane",
@@ -27,7 +26,7 @@ def home():
 
 @app.route("/data", methods=["GET"])
 def get_data():
-    return jsonify(list(users.keys()))
+    return jsonify(list(users.keys())), 200
 
 
 @app.route("/status", methods=["GET"])
@@ -39,13 +38,17 @@ def status():
 def get_user(username):
     user = users.get(username)
     if user:
-        return jsonify(user)
+        return jsonify(user), 200
     return jsonify({"error": "User not found"}), 404
 
 
 @app.route("/add_user", methods=["POST"])
 def add_user_route():
-    data = request.get_json()
+    try:
+        data = request.get_json(force=True)
+    except Exception:
+        return jsonify({"error": "Invalid JSON"}), 400
+
     username = data.get("username")
     if not username:
         return jsonify({"error": "Username is required"}), 400
