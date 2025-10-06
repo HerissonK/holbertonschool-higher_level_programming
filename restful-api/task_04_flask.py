@@ -5,8 +5,18 @@ app = Flask(__name__)
 
 # Stockage des utilisateurs en mémoire
 users = {
-    "jane": {"username": "jane", "name": "Jane", "age": 28, "city": "Los Angeles"},
-    "john": {"username": "john", "name": "John", "age": 30, "city": "New York"}
+    "jane": {
+        "username": "jane",
+        "name": "Jane",
+        "age": 28,
+        "city": "Los Angeles"
+    },
+    "john": {
+        "username": "john",
+        "name": "John",
+        "age": 30,
+        "city": "New York"
+    }
 }
 
 
@@ -46,7 +56,7 @@ def get_user(username):
 
 @app.route("/add_user", methods=["POST"])
 def add_user():
-    data = request.get_json()  # récupère le JSON envoyé
+    data = request.get_json()
     username = data.get("username")
 
     if not username:

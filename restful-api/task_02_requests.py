@@ -13,7 +13,7 @@ def fetch_and_print_posts():
             print(post["title"])    
 
     else:
-        print("Error fetching posts:", reponse.status_code)
+        print("Error fetching posts:", url.status_code)
 
 def fetch_and_save_posts():
     url = "https://jsonplaceholder.typicode.com/posts"
