@@ -1,0 +1,1 @@
+finally SQL is not that bad
