@@ -5,7 +5,7 @@ argument and lists all cities of that state,
 using the database
 """
 
-iif __name__ == '__main__':
+if __name__ == '__main__':
     from sys import argv
     import MySQLdb
 
