@@ -10,25 +10,26 @@ import MySQLdb
 
 
 if __name__ == '__main__':
-    username = sys.argv[1]
-    password = sys.argv[2]
-    database = sys.argv[3]
-    state_name = sys.argv[4]
+    from sys import argv
+    import MySQLdb
 
-    # Connect to MySQL server
-    db = MySQLdb.connect(host='localhost', port=3306,
-                         user=username, passwd=password,
-                         db=database, charset='utf8')
-    cur = db.cursor()
+    db = MySQLdb.connect(
+        user=argv[1],
+        password=argv[2],
+        database=argv[3]
+    )
 
-    # Use format to create the SQL query with user input
-    query = ("SELECT * FROM states WHERE name = '{}' "
-             "ORDER BY id ASC".format(state_name))
-    cur.execute(query)
+    cursor = db.cursor()
 
-    rows = cur.fetchall()
-    for row in rows:
-        print(row)
+    cursor.execute("SELECT * \
+                    FROM `states` \
+                    WHERE BINARY `name` = '{}' \
+                    ORDER BY id".format(argv[4]))
 
-    cur.close()
-    db.close()
+    for state in cursor.fetchall():
+        print(state)
+
+    if cursor:
+        cursor.close()
+    if db:
+        db.close()
