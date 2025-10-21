@@ -5,21 +5,28 @@ lists all states with a name starting with N
 """
 
 
-if __name__ == '__main__':
-    import sys
-    import MySQLdb
+import sys
+import MySQLdb
 
-    if len(sys.argv) != 4:
-        sys.exit('Use: 1-filter_states.py <mysql username> <mysql password>'
-                 ' <database name>')
+if __name__ == "__main__":
+    # Get command line arguments
+    username = sys.argv[1]
+    password = sys.argv[2]
+    database = sys.argv[3]
 
-    conn = MySQLdb.connect(host='localhost', port=3306, user=sys.argv[1],
-                           passwd=sys.argv[2], db=sys.argv[3], charset='utf8')
-    cur = conn.cursor()
-    cur.execute("SELECT * FROM states WHERE name LIKE BINARY 'N%' "
-                "ORDER BY id ASC")
-    query_rows = cur.fetchall()
-    for row in query_rows:
+    # Connect to MySQL server
+    db = MySQLdb.connect(host="localhost", port=3306,
+                         user=username, passwd=password, db=database)
+    cursor = db.cursor()
+
+    # Execute query to select states starting with 'N' sorted by id
+    cursor.execute("SELECT * FROM states WHERE name LIKE 'N%' ORDER BY id ASC")
+
+    # Fetch and print results
+    rows = cursor.fetchall()
+    for row in rows:
         print(row)
-    cur.close()
-    conn.close()
+
+    # Close cursor and connection
+    cursor.close()
+    db.close()
