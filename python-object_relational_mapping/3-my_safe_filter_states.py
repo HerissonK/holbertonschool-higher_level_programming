@@ -6,21 +6,33 @@ name matches the argument. But this time, write one
 that is safe from MySQL injections!
 """
 
+import sys
+import MySQLdb
+
+
 if __name__ == '__main__':
-    import sys
-    import MySQLdb
+    username = sys.argv[1]
+    password = sys.argv[2]
+    database = sys.argv[3]
+    state_name = sys.argv[4]
 
-    if len(sys.argv) != 5:
-        sys.exit('Use: 1-filter_states.py <mysql username> <mysql password>'
-                 ' <database name> <state name searched>')
+    # Connect to MySQL server
+    db = MySQLdb.connect(host='localhost', port=3306,
+                         user=username, passwd=password,
+                         db=database, charset='utf8')
+    cur = db.cursor()
 
-    conn = MySQLdb.connect(host='localhost', port=3306, user=sys.argv[1],
-                           passwd=sys.argv[2], db=sys.argv[3], charset='utf8')
-    cur = conn.cursor()
-    cur.execute("SELECT * FROM states WHERE name LIKE BINARY %s "
-                "ORDER BY id ASC", (sys.argv[4], ))
-    query_rows = cur.fetchall()
-    for row in query_rows:
+    # Escape single quotes to prevent syntax errors
+    safe_name = state_name.replace("'", "''")
+
+    # Required: use format(), not %s
+    query = ("SELECT * FROM states WHERE name = BINARY '{}' "
+             "ORDER BY id ASC".format(safe_name))
+    cur.execute(query)
+
+    rows = cur.fetchall()
+    for row in rows:
         print(row)
+
     cur.close()
-    conn.close()
+    db.close()
