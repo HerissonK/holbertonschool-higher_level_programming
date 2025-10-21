@@ -8,8 +8,10 @@ lists all states with a name starting with N
 import sys
 import MySQLdb
 
+import sys
+import MySQLdb
+
 if __name__ == "__main__":
-    # Get command line arguments
     username = sys.argv[1]
     password = sys.argv[2]
     database = sys.argv[3]
@@ -19,14 +21,13 @@ if __name__ == "__main__":
                          user=username, passwd=password, db=database)
     cursor = db.cursor()
 
-    # Execute query to select states starting with 'N' sorted by id
-    cursor.execute("SELECT * FROM states WHERE name LIKE 'N%' ORDER BY id ASC")
+    # Use BINARY to make LIKE case-sensitive
+    query = "SELECT * FROM states WHERE BINARY name LIKE 'N%' ORDER BY id ASC"
+    cursor.execute(query)
 
-    # Fetch and print results
     rows = cursor.fetchall()
     for row in rows:
         print(row)
 
-    # Close cursor and connection
     cursor.close()
     db.close()
