@@ -8,22 +8,25 @@ matches the argument.
 import sys
 import MySQLdb
 
+
 if __name__ == '__main__':
     username = sys.argv[1]
     password = sys.argv[2]
     database = sys.argv[3]
     state_name = sys.argv[4]
 
-    # Connect to MySQL server
+    # Connect to MySQL server (ensure unicode handling)
     db = MySQLdb.connect(host='localhost', port=3306,
                          user=username, passwd=password,
-                         db=database, charset='utf8')
+                         db=database, charset='utf8',
+                         use_unicode=True)
     cur = db.cursor()
 
-    # Escape the argument manually to prevent breaking the query
+    # SQL-safe escaping for single quotes in the argument:
+    # SQL string literal uses '' to represent a single quote.
     safe_name = state_name.replace("'", "''")
 
-    # Use = BINARY for case-sensitive exact match
+    # Use = BINARY for case-sensitive exact match and sort by id
     query = ("SELECT * FROM states WHERE name = BINARY '{}' "
              "ORDER BY id ASC".format(safe_name))
     cur.execute(query)
