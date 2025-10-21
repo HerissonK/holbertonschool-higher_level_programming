@@ -6,27 +6,31 @@ matches the argument.
 """
 
 
-if __name__ == '__main__':
-    from sys import argv
-    import MySQLdb
+import sys
+import MySQLdb
 
+
+if __name__ == '__main__':
+    # Connect to MySQL server running on localhost at port 3306
     db = MySQLdb.connect(
-        user=argv[1],
-        password=argv[2],
-        database=argv[3]
+        host='localhost',
+        port=3306,
+        user=sys.argv[1],
+        passwd=sys.argv[2],
+        db=sys.argv[3]
     )
 
     cursor = db.cursor()
 
-    cursor.execute("SELECT * \
-                    FROM `states` \
-                    WHERE BINARY `name` = '{}' \
-                    ORDER BY id".format(argv[4]))
+    # Use format to create the SQL query with the user input
+    query = "SELECT * FROM states WHERE name = '{}' ORDER BY id ASC".format(
+        sys.argv[4]
+    )
+    cursor.execute(query)
 
+    # Display results
     for state in cursor.fetchall():
         print(state)
 
-    if cursor:
-        cursor.close()
-    if db:
-        db.close()
+    cursor.close()
+    db.close()
