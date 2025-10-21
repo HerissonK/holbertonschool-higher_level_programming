@@ -5,20 +5,29 @@ in the states table of hbtn_0e_0_usa where name
 matches the argument
 """
 
-if __name__ == '__main__':
-    import sys
-    import MySQLdb
+import sys
+import MySQLdb
 
-    if len(sys.argv) != 5:
-        sys.exit('Use: 1-filter_states.py <mysql username> <mysql password>'
-                 ' <database name> <state name searched>')
-    conn = MySQLdb.connect(host='localhost', port=3306, user=sys.argv[1],
-                           passwd=sys.argv[2], db=sys.argv[3], charset='utf8')
+if __name__ == '__main__':
+    username = sys.argv[1]
+    password = sys.argv[2]
+    database = sys.argv[3]
+    state_name = sys.argv[4]
+
+    # Connect to MySQL server
+    conn = MySQLdb.connect(host='localhost', port=3306,
+                           user=username, passwd=password, db=database,
+                           charset='utf8')
     cur = conn.cursor()
-    cur.execute("SELECT * FROM states WHERE name LIKE BINARY "
-                "'{}' ORDER BY id ASC".format(sys.argv[4]))
-    query_rows = cur.fetchall()
-    for row in query_rows:
+
+    # Use = BINARY for case-sensitive exact match
+    query = ("SELECT * FROM states WHERE name = BINARY '{}' "
+             "ORDER BY id ASC".format(state_name))
+    cur.execute(query)
+
+    rows = cur.fetchall()
+    for row in rows:
         print(row)
+
     cur.close()
     conn.close()
