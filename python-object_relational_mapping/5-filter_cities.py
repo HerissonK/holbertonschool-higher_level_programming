@@ -5,22 +5,29 @@ argument and lists all cities of that state,
 using the database
 """
 
-if __name__ == '__main__':
-    import sys
+iif __name__ == '__main__':
+    from sys import argv
     import MySQLdb
 
-    if len(sys.argv) != 5:
-        sys.exit('Use: 5-filter_cities.py <mysql username> <mysql password>'
-                 ' <database name> <state name>')
+    db = MySQLdb.connect(
+        user=argv[1],
+        password=argv[2],
+        database=argv[3]
+    )
+    cursor = db.cursor()
 
-    conn = MySQLdb.connect(host='localhost', port=3306, user=sys.argv[1],
-                           passwd=sys.argv[2], db=sys.argv[3], charset='utf8')
-    cur = conn.cursor()
-    cur.execute("SELECT cities.name FROM cities LEFT JOIN states "
-                "ON cities.state_id = states.id WHERE states.name = %s "
-                "ORDER BY cities.id ASC", (sys.argv[4], ))
-    query_rows = cur.fetchall()
-    cities = [row[0] for row in query_rows]
-    print(', '.join(cities))
-    cur.close()
-    conn.close()
+    cursor.execute('SELECT c.name, s.name \
+                    FROM cities AS c \
+                    INNER JOIN states AS s ON s.id = c.state_id ')
+
+    cities = []
+    for city in cursor.fetchall():
+        if city[1] == argv[4]:
+            cities.append(city[0])
+
+    print(", ".join(cities))
+
+    if cursor:
+        cursor.close()
+    if db:
+        db.close()
