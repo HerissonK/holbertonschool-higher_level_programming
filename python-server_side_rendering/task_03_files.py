@@ -1,21 +1,25 @@
 from flask import Flask, render_template, request
 import json
-import os
 import csv
+import os
 
 app = Flask(__name__)
+
 
 @app.route('/')
 def home():
     return render_template('index.html')
 
+
 @app.route('/about')
 def about():
     return render_template('about.html')
 
+
 @app.route('/contact')
 def contact():
     return render_template('contact.html')
+
 
 @app.route('/items')
 def items():
@@ -28,6 +32,7 @@ def items():
         return "Items file not found", 404
     except json.JSONDecodeError:
         return "Error decoding JSON", 500
+
 
 def read_json(file_path):
     with open(file_path, 'r') as file:
@@ -44,18 +49,18 @@ def read_csv(file_path):
             products.append(row)
     return products
 
+
 @app.route('/products')
-def product():
+def products():
     source = request.args.get('source')
     product_id = request.args.get('id')
     file_path = ''
 
     if source == 'json':
-        file_path = 'product.json'
-    
+        file_path = 'products.json'
+
     elif source == 'csv':
         file_path = 'products.csv'
-
     else:
         return render_template('product_display.html', error="Wrong source")
 
@@ -72,8 +77,9 @@ def product():
         products = [p for p in products if p['id'] == product_id]
         if not products:
             return render_template('product_display.html', error="Product not found")
-        
+
     return render_template('product_display.html', products=products)
+
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
