@@ -1,0 +1,138 @@
+Projet Holberton Python - Everything is object
+
+Dans ce projet, j’ai exploré l’un des concepts fondamentaux mais souvent mal compris en Python : 
+la distinction entre objets mutables et immuables, et les implications que cela entraîne sur le comportement du langage. 
+Ce sujet touche directement à la manière dont Python gère la mémoire, transmet les arguments aux fonctions, 
+et traite les opérations de modification sur différents types d’objets.
+Dans cet article, je vous présente une synthèse claire et illustrée de tout ce que j’ai appris, 
+accompagnée d’exemples de code concrets pour mieux comprendre.
+
+ID et Type
+
+Chaque objet Python possède deux caractéristiques essentielles : son type et son identifiant unique (id).
+Le type détermine la nature de l’objet (entier, liste, chaîne, etc.), tandis que l’id représente son emplacement en mémoire.
+
+x = 10
+y = 10
+print(type(x))   # <class 'int'>
+print(id(x))     # 140704123456...
+print(id(y))     # le même id !
+
+
+Ici, x et y partagent le même id, car Python optimise la mémoire en réutilisant certains objets immuables.
+
+Objets Mutables
+
+Un objet mutable peut être modifié après sa création.
+Les types mutables principaux sont :
+
+list
+
+dict
+
+set
+
+la plupart des objets définis par l’utilisateur
+
+Exemple :
+
+lst = [1, 2, 3]
+print(id(lst))  # ex : 140700000123456
+
+lst.append(4)
+print(lst)      # [1, 2, 3, 4]
+print(id(lst))  # le même id !
+
+
+L’objet change, mais son emplacement mémoire reste identique.
+
+Objets Immuables
+
+Les objets immuables, eux, ne peuvent pas être modifiés.
+Les types immuables incluent :
+
+int
+
+float
+
+str
+
+tuple
+
+bool
+
+Exemple :
+
+a = 5
+print(id(a))  # ex : 1407012345678
+
+a += 1
+print(a)       # 6
+print(id(a))   # un id différent !
+
+
+a ne change pas : Python crée un nouvel objet.
+
+Pourquoi cela importe-t-il ?
+
+Cette distinction influe directement sur la manière dont Python traite les objets.
+Lorsque vous modifiez un objet mutable, vous modifiez l’objet lui-même, et tous les noms qui y font référence voient cette modification.
+
+À l’inverse, pour un objet immuable, toute modification produit un nouvel objet.
+
+lst1 = [1, 2]
+lst2 = lst1
+
+lst2.append(3)
+print(lst1)  # [1, 2, 3] -> les deux variables pointent vers le même objet
+
+Passage d’arguments aux fonctions
+
+Python ne passe pas les variables, mais les références vers les objets.
+Ce mécanisme est parfois appelé pass-by-assignment ou call-by-object.
+
+Cas 1 : objet mutable
+def add_item(L):
+    L.append(99)
+
+lst = [1, 2, 3]
+add_item(lst)
+print(lst)  # [1, 2, 3, 99]
+
+
+La liste est modifiée dans la fonction.
+
+Cas 2 : objet immuable
+def increment(n):
+    n += 1
+    print("Dans la fonction :", n)
+
+x = 10
+increment(x)   # affiche 11
+print(x)       # 10 -> reste inchangé
+
+
+L’objet x n’est jamais modifié : seul un nouvel objet local est créé.
+
+Avancés : copies superficielles et profondes
+
+Un autre aspect important lorsque l’on manipule des objets mutables concerne les copies.
+
+Copy vs deepcopy
+import copy
+
+a = [[1, 2], [3, 4]]
+b = copy.copy(a)
+c = copy.deepcopy(a)
+
+a[0].append(99)
+
+print(b)  # [[1,2,99],[3,4]]  -> copie superficielle
+print(c)  # [[1,2],[3,4]]     -> copie profonde
+
+
+Cela montre comment Python traite les structures imbriquées.
+
+Conclusion
+
+Comprendre la différence entre objets mutables et immuables est essentiel pour écrire un code Python fiable, éviter les bugs subtils, et maîtriser les mécanismes internes du langage. Grâce à ce projet, j’ai pu clarifier ces notions, expérimenter leur comportement réel, et approfondir des aspects avancés comme le passage d’arguments ou les copies profondes.
